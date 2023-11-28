@@ -195,7 +195,7 @@ public class Index : PageModel
 
         View = new ViewModel
         {
-            AllowRememberLogin = LoginOptions.AllowRememberLogin,
+            AllowRememberLogin = LoginOptions.AllowRememberLogin,   
             EnableLocalLogin = allowLocal && LoginOptions.AllowLocalLogin,
             ExternalProviders = providers.ToArray()
         };

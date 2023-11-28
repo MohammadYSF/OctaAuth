@@ -3,6 +3,8 @@ using Duende.IdentityServer.Models;
 using Auth.Models;
 using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Authentication.OpenIdConnect;
+using Duende.IdentityServer;
 
 namespace Auth;
 
@@ -14,6 +16,7 @@ public class CustomProfileService : ProfileService<ApplicationUser>
 
     protected override async Task GetProfileDataAsync(ProfileDataRequestContext context, ApplicationUser user)
     {
+        
         var principal = await GetUserClaimsAsync(user);
         var id = (ClaimsIdentity)principal.Identity;
         if (!string.IsNullOrEmpty(user.FavoriteColor))
