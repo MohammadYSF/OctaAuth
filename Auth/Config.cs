@@ -5,13 +5,13 @@ using IdentityModel;
 namespace Auth;
 
 public static class Config
-{
+{    
     public static IEnumerable<IdentityResource> IdentityResources =>
         new List<IdentityResource>
         {
             new IdentityResources.OpenId(),
             new IdentityResources.Profile(),
-            new IdentityResource("color", new [] { "favorite_color" }),
+            //new IdentityResource("color", new [] { "favorite_color" }),
             new IdentityResources.Email()
         };
 
@@ -28,12 +28,26 @@ public static class Config
             // machine to machine client
             new Client
             {
-                ClientId = "client2",
-                ClientSecrets = { new Secret("secret2".Sha256()) },
+                ClientId = "flutter",
+                ClientSecrets = { new Secret("fluttersecret".Sha256()) },
+                
+                AllowedGrantTypes = GrantTypes.Code,
+                       // where to redirect to after login
+                RedirectUris = { "https://localhost:7253/signin-oidc" },
 
-                AllowedGrantTypes = GrantTypes.ClientCredentials,
+                // where to redirect to after logout
+                PostLogoutRedirectUris = { "https://localhost:7253/signout-callback-oidc" },
+                AllowOfflineAccess = true,
+    
                 // scopes that client has access to
-                AllowedScopes = { "api1" }
+                  AllowedScopes = new List<string>
+                {
+                    IdentityServerConstants.StandardScopes.OpenId,
+                    IdentityServerConstants.StandardScopes.Profile,
+                    IdentityServerConstants.StandardScopes.Email,
+                    "api1",
+                    //"color"
+                }
             },
                 
             // interactive ASP.NET Core Web App
@@ -41,24 +55,24 @@ public static class Config
             {
                 ClientId = "client",
                 ClientSecrets = { new Secret("secret".Sha256()) },
-
+                
                 AllowedGrantTypes = GrantTypes.Code,
                     
                 // where to redirect to after login
-                RedirectUris = { "https://localhost:7253/signin-oidc" },
-
+                RedirectUris = { "https://software-proj-blazor.chbk.run/signin-oidc", "http://software-proj-blazor.chbk.run/signin-oidc" },
+                
                 // where to redirect to after logout
-                PostLogoutRedirectUris = { "https://localhost:7253/signout-callback-oidc" },
-    
+                PostLogoutRedirectUris = { "https://software-proj-blazor.chbk.run/signout-callback-oidc" },
+
                 AllowOfflineAccess = true,
 
-                AllowedScopes = new List<string>    
+                AllowedScopes = new List<string>
                 {
                     IdentityServerConstants.StandardScopes.OpenId,
                     IdentityServerConstants.StandardScopes.Profile,
                     IdentityServerConstants.StandardScopes.Email,
                     "api1",
-                    "color"
+                    //"color"
                 }
             }
         };

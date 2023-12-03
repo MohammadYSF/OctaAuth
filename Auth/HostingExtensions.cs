@@ -14,7 +14,7 @@ internal static class HostingExtensions
         builder.Services.AddRazorPages();
 
         builder.Services.AddDbContext<ApplicationDbContext>(options =>
-            options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
+            options.UseNpgsql(builder.Configuration.GetConnectionString("OAS")));
 
         builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
             .AddEntityFrameworkStores<ApplicationDbContext>()
@@ -22,7 +22,7 @@ internal static class HostingExtensions
 
         builder.Services
             .AddIdentityServer(options =>
-            {
+            {                
                 options.Events.RaiseErrorEvents = true;
                 options.Events.RaiseInformationEvents = true;
                 options.Events.RaiseFailureEvents = true;
@@ -35,7 +35,8 @@ internal static class HostingExtensions
             .AddInMemoryApiScopes(Config.ApiScopes)
             .AddInMemoryClients(Config.Clients)
             .AddAspNetIdentity<ApplicationUser>()
-            .AddProfileService<CustomProfileService>();
+            .AddProfileService<CustomProfileService>()
+            .AddInMemoryPersistedGrants();
         
         builder.Services.AddAuthentication()
             .AddGoogle(options =>
@@ -50,7 +51,12 @@ internal static class HostingExtensions
     }
     
     public static WebApplication ConfigurePipeline(this WebApplication app)
-    { 
+    {
+        app.Use(async (context, next) =>
+        {
+            context.Request.Scheme = "https";
+            await next.Invoke();
+        });
         app.UseSerilogRequestLogging();
     
         if (app.Environment.IsDevelopment())
@@ -58,6 +64,8 @@ internal static class HostingExtensions
             app.UseDeveloperExceptionPage();
         }
 
+        app.UseHsts();
+        app.UseHttpsRedirection();
         app.UseStaticFiles();
         app.UseRouting();
         app.UseIdentityServer();
