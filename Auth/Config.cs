@@ -31,14 +31,14 @@ public static class Config
                 ClientId = "flutter",
                 ClientSecrets = { new Secret("fluttersecret".Sha256()) },
                 
-                AllowedGrantTypes = GrantTypes.Code,
+                AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
                        // where to redirect to after login
-                RedirectUris = { "https://localhost:7253/signin-oidc" },
+                //RedirectUris = { "https://localhost:7253/signin-oidc" },
 
                 // where to redirect to after logout
-                PostLogoutRedirectUris = { "https://localhost:7253/signout-callback-oidc" },
+                //PostLogoutRedirectUris = { "https://localhost:7253/signout-callback-oidc" },
                 AllowOfflineAccess = true,
-    
+            
                 // scopes that client has access to
                   AllowedScopes = new List<string>
                 {
