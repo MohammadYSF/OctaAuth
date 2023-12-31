@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Duende.IdentityServer;
+using IdentityModel;
 
 namespace Auth;
 
@@ -16,13 +17,11 @@ public class CustomProfileService : ProfileService<ApplicationUser>
 
     protected override async Task GetProfileDataAsync(ProfileDataRequestContext context, ApplicationUser user)
     {
-        
+
         var principal = await GetUserClaimsAsync(user);
         var id = (ClaimsIdentity)principal.Identity;
-        if (!string.IsNullOrEmpty(user.FavoriteColor))
-        {
-            id.AddClaim(new Claim("favorite_color", user.FavoriteColor));
-        }
+        id.AddClaim(new Claim(JwtClaimTypes.GivenName, user.FirstName));
+        id.AddClaim(new Claim(JwtClaimTypes.FamilyName, user.LastName));
 
         context.AddRequestedClaims(principal.Claims);
     }

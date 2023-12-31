@@ -35,7 +35,7 @@ public class Callback : PageModel
         _logger = logger;
         _events = events;
     }
-        
+
     public async Task<IActionResult> OnGet()
     {
         // read external identity from the temporary cookie
@@ -92,7 +92,7 @@ public class Callback : PageModel
 
         // check if external login is in the context of an OIDC request
         var context = await _interaction.GetAuthorizationContextAsync(returnUrl);
-        await _events.RaiseAsync(new UserLoginSuccessEvent(provider, providerUserId, user.Id, user.UserName, true, context?.Client.ClientId));
+        await _events.RaiseAsync(new UserLoginSuccessEvent(provider, providerUserId, user.Id.ToString(), user.UserName, true, context?.Client.ClientId));
 
         if (context != null)
         {
@@ -109,12 +109,12 @@ public class Callback : PageModel
 
     private async Task<ApplicationUser> AutoProvisionUserAsync(string provider, string providerUserId, IEnumerable<Claim> claims)
     {
-        var sub = Guid.NewGuid().ToString();
-            
+        var sub = Guid.NewGuid();
+
         var user = new ApplicationUser
         {
             Id = sub,
-            UserName = sub, // don't need a username, since the user will be using an external provider to login
+            UserName = sub.ToString(), // don't need a username, since the user will be using an external provider to login
         };
 
         // email
@@ -124,7 +124,7 @@ public class Callback : PageModel
         {
             user.Email = email;
         }
-            
+
         // create a list of claims that we want to transfer into our store
         var filtered = new List<Claim>();
 

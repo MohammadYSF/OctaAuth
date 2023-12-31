@@ -29,7 +29,8 @@ public class CustomerEventHandler : IEventHandler<CustomerCreatedEvent>
                 LastName = @event.LastName,
                 UserName = @event.Code.ToString()
             };
-            await _userManager.CreateAsync(appUser,@event.PhoneNumber);//todo:totp later
+            await _userManager.CreateAsync(appUser, @event.PhoneNumber);//todo:totp later
+            await _userManager.AddToRoleAsync(user, "Customer");
         }
     }
 }

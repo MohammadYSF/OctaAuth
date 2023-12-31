@@ -26,8 +26,7 @@ public class SeedData
                 {
                     UserName = "alice",
                     Email = "AliceSmith@email.com",
-                    EmailConfirmed = true,
-                    FavoriteColor = "red",
+                    EmailConfirmed = true
                 };
                 var result = userMgr.CreateAsync(alice, "Pass123$").Result;
                 if (!result.Succeeded)
