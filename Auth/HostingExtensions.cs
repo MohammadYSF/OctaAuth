@@ -50,7 +50,9 @@ internal static class HostingExtensions
             .AddInMemoryClients(Config.Clients)
             .AddAspNetIdentity<ApplicationUser>()
             .AddProfileService<CustomProfileService>()
-            .AddInMemoryPersistedGrants();
+            .AddInMemoryPersistedGrants()
+            .AddDeveloperSigningCredential()
+            ;
 
         builder.Services.AddAuthentication()
             .AddGoogle(options =>

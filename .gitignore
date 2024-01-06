@@ -363,3 +363,4 @@ MigrationBackup/
 FodyWeavers.xsd
 /octaAuth-publish
 /Auth/appsettings.Production.json
+/Auth/tempkey.jwk
