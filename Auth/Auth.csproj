@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-	  <TargetFramework>net6.0</TargetFramework>
+	  <TargetFramework>net7.0</TargetFramework>
 	  <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
@@ -34,6 +34,19 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Core\" />
     <Folder Include="Migrations\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="OctaShared.Contracts">
+      <HintPath>..\..\OctaShared\OctaShared.RabbitMQBus\bin\Debug\net7.0\OctaShared.Contracts.dll</HintPath>
+    </Reference>
+    <Reference Include="OctaShared.Events">
+      <HintPath>..\..\OctaShared\OctaShared.RabbitMQBus\bin\Debug\net7.0\OctaShared.Events.dll</HintPath>
+    </Reference>
+    <Reference Include="OctaShared.RabbitMQBus">
+      <HintPath>..\..\OctaShared\OctaShared.RabbitMQBus\bin\Debug\net7.0\OctaShared.RabbitMQBus.dll</HintPath>
+    </Reference>
   </ItemGroup>
 </Project>

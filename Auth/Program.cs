@@ -1,6 +1,6 @@
 ﻿using Auth;
 using Serilog;
-using Auth.RabbitMqBus;
+using OctaShared.RabbitMqBus;
 Log.Logger = new LoggerConfiguration()
     .WriteTo.Console()
     .CreateBootstrapLogger();
@@ -15,10 +15,12 @@ try
         .WriteTo.Console(outputTemplate: "[{Timestamp:HH:mm:ss} {Level}] {SourceContext}{NewLine}{Message:lj}{NewLine}{Exception}{NewLine}")
         .Enrich.FromLogContext()
         .ReadFrom.Configuration(ctx.Configuration));
+    builder.Services.ConfigureBus(builder.Configuration);
     var app = builder
-        .ConfigureBus()
+        //.ConfigureBus()
         .ConfigureServices()
         .ConfigurePipeline();
+
     app.UseCors(options =>
     {
         options.AllowAnyOrigin();
