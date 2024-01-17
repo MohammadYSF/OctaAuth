@@ -1,9 +1,9 @@
-﻿using Auth.Core;
-using Auth.Data;
-using Auth.Events.Customer;
+﻿using Auth.Data;
 using Auth.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using OctaShared.Contracts;
+using OctaShared.Events;
 
 namespace Auth.EventHandlers.Customer;
 

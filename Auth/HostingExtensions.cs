@@ -4,10 +4,9 @@ using Auth.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
-using Auth.RabbitMqBus;
-using Auth.Events.Customer;
 using Auth.EventHandlers.Customer;
-using Auth.Core;
+using OctaShared.Events;
+using OctaShared.Contracts;
 
 namespace Auth;
 
