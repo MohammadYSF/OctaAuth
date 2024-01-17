@@ -51,7 +51,7 @@ internal static class HostingExtensions
             .AddAspNetIdentity<ApplicationUser>()
             .AddProfileService<CustomProfileService>()
             .AddInMemoryPersistedGrants()
-            .AddDeveloperSigningCredential()
+            .AddDeveloperSigningCredential(persistKey: false)
             ;
 
         builder.Services.AddAuthentication()
